@@ -20,18 +20,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     sox && \
     pip install torch==2.7.0+cu128 torchaudio==2.7.0+cu128 --index-url https://download.pytorch.org/whl/cu128 && \
     if [ -n "${ULTIMATE_RVC_VERSION}" ]; then \
-        pip install ultimate-rvc==${ULTIMATE_RVC_VERSION}; \
+    pip install ultimate-rvc==${ULTIMATE_RVC_VERSION}; \
     else \
-        pip install ultimate-rvc; \
+    pip install ultimate-rvc; \
     fi && \
     apt-get remove --purge -y build-essential && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install typer==0.16.0 && \
-    urvc --help # Verify installation and pre-initialize
-
-# TODO: remove `pip install typer==0.16.0` once upstream fixes the CLI issue
+    rm -rf /var/lib/apt/lists/*
 
 # Set environment variables
 ENV URVC_MODELS_DIR=/data/urvc/models
